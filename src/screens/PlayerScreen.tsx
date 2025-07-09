@@ -12,7 +12,7 @@ import {
   getDuration,
   getIsPlaying,
   getCurrentTrack
-} from '../services/PlayerService';
+} from '../services/SimplePlayerService';
 
 type PlayerScreenRouteProp = RouteProp<RootStackParamList, 'Player'>;
 
@@ -32,7 +32,7 @@ const PlayerScreen = () => {
       const position = await getCurrentPosition();
       setCurrentPosition(position);
       
-      const dur = getDuration();
+      const dur = await getDuration();
       if (dur > 0) {
         setDuration(dur);
       }

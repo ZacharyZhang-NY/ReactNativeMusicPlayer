@@ -6,7 +6,7 @@ import { createStyleSheet, useStyles } from 'react-native-unistyles';
 import { RootStackParamList, Track } from '../types';
 import { mockTracks } from '../services/MockMusicService';
 import { MusicService } from '../services/MusicService';
-import { playTrack } from '../services/PlayerService';
+import { playTrack } from '../services/SimplePlayerService';
 
 type TracksScreenRouteProp = RouteProp<RootStackParamList, 'Tracks'>;
 type TracksScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Tracks'>;
