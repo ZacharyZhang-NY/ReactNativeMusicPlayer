@@ -1,97 +1,163 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# React Native Offline Music Player
 
-# Getting Started
+一个使用 React Native 和 Unistyles v3 构建的离线音乐播放器应用。
 
-> **Note**: Make sure you have completed the [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment) guide before proceeding.
+## 功能特性
 
-## Step 1: Start Metro
+- 🎵 **完全离线播放** - 扫描并播放设备上的本地音乐文件
+- 🎨 **现代化UI设计** - 使用 Unistyles v3 构建的深色主题界面
+- 📱 **流畅导航** - 艺术家 → 专辑 → 歌曲的层级浏览
+- 🎧 **后台播放** - 支持应用最小化后继续播放
+- 🎮 **完整播放控制** - 播放/暂停、上一首/下一首、进度拖动
+- 📂 **自动音乐扫描** - 自动扫描设备上的音乐文件并建立索引
 
-First, you will need to run **Metro**, the JavaScript build tool for React Native.
+## 技术栈
 
-To start the Metro dev server, run the following command from the root of your React Native project:
+- **React Native** 0.80.1
+- **TypeScript** - 类型安全的开发体验
+- **Unistyles v3** - 高性能的样式管理方案
+- **React Navigation v6** - 导航管理
+- **react-native-track-player** - 音频播放引擎
+- **react-native-fs** - 文件系统访问
+- **react-native-get-music-files** - 音乐文件扫描
 
-```sh
-# Using npm
-npm start
+## 项目结构
 
-# OR using Yarn
-yarn start
+```
+src/
+├── components/          # 可复用组件
+├── screens/            # 应用页面
+│   ├── ArtistsScreen.tsx
+│   ├── AlbumsScreen.tsx
+│   ├── TracksScreen.tsx
+│   └── PlayerScreen.tsx
+├── navigation/         # 导航配置
+│   └── AppNavigator.tsx
+├── services/           # 业务逻辑
+│   ├── MusicService.ts
+│   ├── PlayerService.ts
+│   └── MockMusicService.ts
+├── styles/             # Unistyles配置
+│   ├── unistyles.ts
+│   └── styles.ts
+├── types/              # TypeScript类型定义
+│   └── index.ts
+└── utils/              # 工具函数
 ```
 
-## Step 2: Build and run your app
+## 开始使用
 
-With Metro running, open a new terminal window/pane from the root of your React Native project, and use one of the following commands to build and run your Android or iOS app:
+### 前置要求
+
+- Node.js >= 18
+- React Native 开发环境配置完成
+- Android Studio / Xcode（取决于目标平台）
+
+### 安装依赖
+
+```bash
+cd MusicPlayer
+npm install
+```
+
+### iOS 设置
+
+```bash
+cd ios
+pod install
+cd ..
+```
+
+### 运行应用
+
+#### Android
+```bash
+npm run android
+```
+
+#### iOS
+```bash
+npm run ios
+```
+
+## 使用说明
+
+1. **首次启动**
+   - 应用会使用模拟数据展示界面
+   - 在艺术家列表页面下拉刷新会触发音乐扫描
+
+2. **音乐扫描**
+   - Android 需要授予存储权限
+   - 应用会自动扫描设备上的音频文件（mp3、m4a、flac等）
+   - 扫描结果会自动保存，下次启动无需重新扫描
+
+3. **播放控制**
+   - 点击任意歌曲开始播放
+   - 支持播放/暂停、上一首/下一首
+   - 可拖动进度条调整播放位置
+   - 支持后台播放
+
+## 权限说明
 
 ### Android
-
-```sh
-# Using npm
-npm run android
-
-# OR using Yarn
-yarn android
-```
+需要以下权限：
+- `READ_EXTERNAL_STORAGE` - 读取音乐文件
+- `WRITE_EXTERNAL_STORAGE` - 保存音乐库索引
 
 ### iOS
+需要配置 Info.plist：
+- `NSAppleMusicUsageDescription` - 访问音乐库
 
-For iOS, remember to install CocoaPods dependencies (this only needs to be run on first clone or after updating native deps).
+## 开发说明
 
-The first time you create a new project, run the Ruby bundler to install CocoaPods itself:
+### 添加新功能
+1. 在 `src/types/index.ts` 中定义类型
+2. 在对应的 service 中实现业务逻辑
+3. 创建或修改相应的 screen 组件
+4. 使用 Unistyles v3 进行样式管理
 
-```sh
-bundle install
+### 样式主题
+- 支持明暗主题切换（默认暗色主题）
+- 主题配置在 `src/styles/unistyles.ts`
+- 使用 `useStyles` hook 访问样式
+
+## 故障排除
+
+### Android 构建失败
+```bash
+cd android
+./gradlew clean
+cd ..
+npm run android
 ```
 
-Then, and every time you update your native dependencies, run:
-
-```sh
-bundle exec pod install
-```
-
-For more information, please visit [CocoaPods Getting Started guide](https://guides.cocoapods.org/using/getting-started.html).
-
-```sh
-# Using npm
+### iOS 构建失败
+```bash
+cd ios
+rm -rf Pods
+pod install
+cd ..
 npm run ios
-
-# OR using Yarn
-yarn ios
 ```
 
-If everything is set up correctly, you should see your new app running in the Android Emulator, iOS Simulator, or your connected device.
+### Metro 缓存问题
+```bash
+npx react-native start --reset-cache
+```
 
-This is one way to run your app — you can also build it directly from Android Studio or Xcode.
+## 待优化项
 
-## Step 3: Modify your app
+- [ ] 添加搜索功能
+- [ ] 支持播放列表创建和管理
+- [ ] 添加歌词显示
+- [ ] 支持更多音频格式
+- [ ] 添加均衡器功能
+- [ ] 优化大型音乐库的性能
 
-Now that you have successfully run the app, let's make changes!
+## 贡献指南
 
-Open `App.tsx` in your text editor of choice and make some changes. When you save, your app will automatically update and reflect these changes — this is powered by [Fast Refresh](https://reactnative.dev/docs/fast-refresh).
+欢迎提交 Issue 和 Pull Request！
 
-When you want to forcefully reload, for example to reset the state of your app, you can perform a full reload:
+## 许可证
 
-- **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Dev Menu**, accessed via <kbd>Ctrl</kbd> + <kbd>M</kbd> (Windows/Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (macOS).
-- **iOS**: Press <kbd>R</kbd> in iOS Simulator.
-
-## Congratulations! :tada:
-
-You've successfully run and modified your React Native App. :partying_face:
-
-### Now what?
-
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [docs](https://reactnative.dev/docs/getting-started).
-
-# Troubleshooting
-
-If you're having issues getting the above steps to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
-
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+MIT License
